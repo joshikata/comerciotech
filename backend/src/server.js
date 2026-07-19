@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const customerRoutes = require("./routes/customerRoutes");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const { notFoundHandler, errorHandler } = require("./middlewares/errorHandler");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,9 @@ app.get("/api/health", (req, res) => {
     status: "ok",
   });
 });
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 const startServer = async () => {
   try {
