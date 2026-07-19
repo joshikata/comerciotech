@@ -218,19 +218,17 @@ Base URL backend: `http://localhost:5000`
 
 ## Capturas
 
-Agrega aquí las capturas de la aplicación.
-
 ### Home
-![Home](docs/screenshots/home.png)
+![Home](home.png)
 
 ### Clientes
-![Clientes](docs/screenshots/clientes.png)
+![Clientes](clientes.png)
 
 ### Productos
-![Productos](docs/screenshots/productos.png)
+![Productos](productos.png)
 
 ### Pedidos
-![Pedidos](docs/screenshots/pedidos.png)
+![Pedidos](pedidos.png)
 
 ## Scripts Útiles (Raíz)
 
