@@ -149,10 +149,11 @@ function OrderForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <h2>{initialData ? 'Editar pedido' : 'Nuevo pedido'}</h2>
+    <form className="form" onSubmit={handleSubmit} noValidate>
+      <h2 className="form-title">{initialData ? 'Editar pedido' : 'Nuevo pedido'}</h2>
 
-      <div>
+      <div className="form-grid">
+      <div className="form-field form-field-full">
         <label htmlFor="clienteId">Cliente</label>
         <select
           id="clienteId"
@@ -177,10 +178,10 @@ function OrderForm({
             )
           })}
         </select>
-        {errors.clienteId ? <p>{errors.clienteId}</p> : null}
+        {errors.clienteId ? <p className="form-error">{errors.clienteId}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field form-field-full">
         <label htmlFor="direccionEnvio">Direccion de envio</label>
         <input
           id="direccionEnvio"
@@ -195,67 +196,79 @@ function OrderForm({
           }
         />
       </div>
+      </div>
 
-      <div>
+      <div className="panel">
         <h3>Productos</h3>
+
+        <div className="order-items">
 
         {formData.productos.map((item, index) => {
           const selectedProduct = getProductById(products, item.productoId)
           const subtotal = Number(selectedProduct?.precio || 0) * Number(item.cantidad || 0)
 
           return (
-            <div key={`${item.productoId}-${index}`}>
-              <label htmlFor={`producto-${index}`}>Producto</label>
-              <select
-                id={`producto-${index}`}
-                value={item.productoId}
-                onChange={(event) => updateItem(index, 'productoId', event.target.value)}
-              >
-                <option value="">Selecciona un producto</option>
-                {products.map((product) => {
-                  const id = product._id || product.id
-                  return (
-                    <option key={id} value={id}>
-                      {product.nombre} - ${product.precio}
-                    </option>
-                  )
-                })}
-              </select>
-              {errors[`producto-${index}`] ? <p>{errors[`producto-${index}`]}</p> : null}
+            <div className="order-item" key={`${item.productoId}-${index}`}>
+              <div className="order-item-grid">
+                <div className="form-field">
+                  <label htmlFor={`producto-${index}`}>Producto</label>
+                  <select
+                    id={`producto-${index}`}
+                    value={item.productoId}
+                    onChange={(event) => updateItem(index, 'productoId', event.target.value)}
+                  >
+                    <option value="">Selecciona un producto</option>
+                    {products.map((product) => {
+                      const id = product._id || product.id
+                      return (
+                        <option key={id} value={id}>
+                          {product.nombre} - ${product.precio}
+                        </option>
+                      )
+                    })}
+                  </select>
+                  {errors[`producto-${index}`] ? <p className="form-error">{errors[`producto-${index}`]}</p> : null}
+                </div>
 
-              <label htmlFor={`cantidad-${index}`}>Cantidad</label>
-              <input
-                id={`cantidad-${index}`}
-                type="number"
-                min="1"
-                value={item.cantidad}
-                onChange={(event) => updateItem(index, 'cantidad', event.target.value)}
-              />
-              {errors[`cantidad-${index}`] ? <p>{errors[`cantidad-${index}`]}</p> : null}
+                <div className="form-field">
+                  <label htmlFor={`cantidad-${index}`}>Cantidad</label>
+                  <input
+                    id={`cantidad-${index}`}
+                    type="number"
+                    min="1"
+                    value={item.cantidad}
+                    onChange={(event) => updateItem(index, 'cantidad', event.target.value)}
+                  />
+                  {errors[`cantidad-${index}`] ? <p className="form-error">{errors[`cantidad-${index}`]}</p> : null}
+                </div>
 
-              <p>Subtotal estimado: ${subtotal}</p>
+                <button className="btn btn-danger" type="button" onClick={() => removeItem(index)}>
+                  Quitar
+                </button>
+              </div>
 
-              <button type="button" onClick={() => removeItem(index)}>
-                Quitar producto
-              </button>
+              <p className="order-item-subtotal">Subtotal estimado: ${subtotal}</p>
             </div>
           )
         })}
+        </div>
 
-        {errors.productos ? <p>{errors.productos}</p> : null}
+        {errors.productos ? <p className="form-error">{errors.productos}</p> : null}
 
-        <button type="button" onClick={addItem}>
+        <div className="form-actions">
+        <button className="btn btn-secondary" type="button" onClick={addItem}>
           Agregar producto
         </button>
+        </div>
       </div>
 
-      <p>Total estimado: ${estimatedTotal}</p>
+      <p className="order-total">Total estimado: ${estimatedTotal}</p>
 
-      <div>
-        <button type="submit" disabled={isSubmitting}>
+      <div className="form-actions">
+        <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Guardando...' : initialData ? 'Guardar cambios' : 'Crear pedido'}
         </button>
-        <button type="button" onClick={onCancel} disabled={isSubmitting}>
+        <button className="btn btn-secondary" type="button" onClick={onCancel} disabled={isSubmitting}>
           Cancelar
         </button>
       </div>

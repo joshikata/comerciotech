@@ -119,33 +119,40 @@ function OrdersPage() {
 
   return (
     <section className="page-card">
-      <h1>Pedidos</h1>
+      <header className="page-header">
+        <div>
+          <h1 className="page-title">Pedidos</h1>
+          <p className="page-subtitle">Creacion, seguimiento y control de estado de pedidos.</p>
+        </div>
+      </header>
 
-      {errorMessage ? <p>{errorMessage}</p> : null}
-      {successMessage ? <p>{successMessage}</p> : null}
+      {errorMessage ? <p className="alert alert-error">{errorMessage}</p> : null}
+      {successMessage ? <p className="alert alert-success">{successMessage}</p> : null}
 
-      <OrderForm
-        customers={customers}
-        products={products}
-        onSubmit={handleCreateOrder}
-        onCancel={() => {
-          setErrorMessage('')
-          setSuccessMessage('')
-        }}
-        isSubmitting={submitting}
-      />
-
-      <hr />
-
-      {loading ? (
-        <p>Cargando pedidos...</p>
-      ) : (
-        <OrderTable
-          orders={orders}
-          onChangeStatus={handleChangeStatus}
-          onDelete={handleDelete}
+      <div className="panel">
+        <OrderForm
+          customers={customers}
+          products={products}
+          onSubmit={handleCreateOrder}
+          onCancel={() => {
+            setErrorMessage('')
+            setSuccessMessage('')
+          }}
+          isSubmitting={submitting}
         />
-      )}
+      </div>
+
+      <div className="panel">
+        {loading ? (
+          <p className="loading-text">Cargando pedidos...</p>
+        ) : (
+          <OrderTable
+            orders={orders}
+            onChangeStatus={handleChangeStatus}
+            onDelete={handleDelete}
+          />
+        )}
+      </div>
     </section>
   )
 }

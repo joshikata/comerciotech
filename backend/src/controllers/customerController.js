@@ -113,7 +113,7 @@ const updateCustomer = async (req, res) => {
     }
 
     const updatedCustomer = await Customer.findByIdAndUpdate(id, req.body, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
 

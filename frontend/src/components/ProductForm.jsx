@@ -113,10 +113,11 @@ function ProductForm({ initialData, onSubmit, onCancel, isSubmitting = false }) 
   const submitLabel = initialData ? 'Guardar cambios' : 'Crear producto'
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <h2>{title}</h2>
+    <form className="form" onSubmit={handleSubmit} noValidate>
+      <h2 className="form-title">{title}</h2>
 
-      <div>
+      <div className="form-grid">
+      <div className="form-field">
         <label htmlFor="nombre">Nombre</label>
         <input
           id="nombre"
@@ -126,10 +127,10 @@ function ProductForm({ initialData, onSubmit, onCancel, isSubmitting = false }) 
           onChange={handleChange}
           aria-invalid={Boolean(errors.nombre)}
         />
-        {errors.nombre ? <p>{errors.nombre}</p> : null}
+        {errors.nombre ? <p className="form-error">{errors.nombre}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field form-field-full">
         <label htmlFor="descripcion">Descripcion</label>
         <textarea
           id="descripcion"
@@ -140,7 +141,7 @@ function ProductForm({ initialData, onSubmit, onCancel, isSubmitting = false }) 
         />
       </div>
 
-      <div>
+      <div className="form-field">
         <label htmlFor="categoria">Categoria</label>
         <input
           id="categoria"
@@ -150,10 +151,10 @@ function ProductForm({ initialData, onSubmit, onCancel, isSubmitting = false }) 
           onChange={handleChange}
           aria-invalid={Boolean(errors.categoria)}
         />
-        {errors.categoria ? <p>{errors.categoria}</p> : null}
+        {errors.categoria ? <p className="form-error">{errors.categoria}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field">
         <label htmlFor="precio">Precio</label>
         <input
           id="precio"
@@ -165,10 +166,10 @@ function ProductForm({ initialData, onSubmit, onCancel, isSubmitting = false }) 
           onChange={handleChange}
           aria-invalid={Boolean(errors.precio)}
         />
-        {errors.precio ? <p>{errors.precio}</p> : null}
+        {errors.precio ? <p className="form-error">{errors.precio}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field">
         <label htmlFor="stock">Stock</label>
         <input
           id="stock"
@@ -180,10 +181,10 @@ function ProductForm({ initialData, onSubmit, onCancel, isSubmitting = false }) 
           onChange={handleChange}
           aria-invalid={Boolean(errors.stock)}
         />
-        {errors.stock ? <p>{errors.stock}</p> : null}
+        {errors.stock ? <p className="form-error">{errors.stock}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field">
         <label htmlFor="sku">SKU</label>
         <input
           id="sku"
@@ -193,10 +194,10 @@ function ProductForm({ initialData, onSubmit, onCancel, isSubmitting = false }) 
           onChange={handleChange}
           aria-invalid={Boolean(errors.sku)}
         />
-        {errors.sku ? <p>{errors.sku}</p> : null}
+        {errors.sku ? <p className="form-error">{errors.sku}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field checkbox-row form-field-full">
         <label htmlFor="activo">
           <input
             id="activo"
@@ -208,12 +209,13 @@ function ProductForm({ initialData, onSubmit, onCancel, isSubmitting = false }) 
           Activo
         </label>
       </div>
+      </div>
 
-      <div>
-        <button type="submit" disabled={isSubmitting}>
+      <div className="form-actions">
+        <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Guardando...' : submitLabel}
         </button>
-        <button type="button" onClick={onCancel} disabled={isSubmitting}>
+        <button className="btn btn-secondary" type="button" onClick={onCancel} disabled={isSubmitting}>
           Cancelar
         </button>
       </div>

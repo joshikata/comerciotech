@@ -1,38 +1,42 @@
 function CustomerTable({ customers, onEdit, onDelete }) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Correo</th>
-          <th>Telefono</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {customers?.length ? (
-          customers.map((customer) => (
-            <tr key={customer._id || customer.id}>
-              <td>{customer.nombre}</td>
-              <td>{customer.correo}</td>
-              <td>{customer.telefono || '-'}</td>
-              <td>
-                <button type="button" onClick={() => onEdit?.(customer)}>
-                  Editar
-                </button>
-                <button type="button" onClick={() => onDelete?.(customer)}>
-                  Eliminar
-                </button>
-              </td>
-            </tr>
-          ))
-        ) : (
+    <div className="table-wrap">
+      <table className="table">
+        <thead>
           <tr>
-            <td colSpan="4">No hay clientes para mostrar.</td>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Telefono</th>
+            <th>Acciones</th>
           </tr>
-        )}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {customers?.length ? (
+            customers.map((customer) => (
+              <tr key={customer._id || customer.id}>
+                <td>{customer.nombre}</td>
+                <td>{customer.correo}</td>
+                <td>{customer.telefono || '-'}</td>
+                <td>
+                  <div className="row-actions">
+                    <button className="btn btn-secondary" type="button" onClick={() => onEdit?.(customer)}>
+                      Editar
+                    </button>
+                    <button className="btn btn-danger" type="button" onClick={() => onDelete?.(customer)}>
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td className="empty-row" colSpan="4">No hay clientes para mostrar.</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   )
 }
 

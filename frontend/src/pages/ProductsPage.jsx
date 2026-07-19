@@ -104,35 +104,46 @@ function ProductsPage() {
 
   return (
     <section className="page-card">
-      <h1>Productos</h1>
+      <header className="page-header">
+        <div>
+          <h1 className="page-title">Productos</h1>
+          <p className="page-subtitle">Gestion de catalogo, inventario y precios.</p>
+        </div>
+      </header>
 
-      {errorMessage ? <p>{errorMessage}</p> : null}
-      {successMessage ? <p>{successMessage}</p> : null}
+      {errorMessage ? <p className="alert alert-error">{errorMessage}</p> : null}
+      {successMessage ? <p className="alert alert-success">{successMessage}</p> : null}
 
-      <div style={{ marginBottom: '1rem' }}>
-        <button type="button" onClick={() => setSelectedProduct(null)}>
+      <div className="toolbar">
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => setSelectedProduct(null)}
+        >
           Nuevo producto
         </button>
       </div>
 
-      <ProductForm
-        initialData={selectedProduct}
-        onSubmit={handleCreateOrUpdate}
-        onCancel={handleCancel}
-        isSubmitting={submitting}
-      />
-
-      <hr />
-
-      {loading ? (
-        <p>Cargando productos...</p>
-      ) : (
-        <ProductTable
-          products={products}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
+      <div className="panel">
+        <ProductForm
+          initialData={selectedProduct}
+          onSubmit={handleCreateOrUpdate}
+          onCancel={handleCancel}
+          isSubmitting={submitting}
         />
-      )}
+      </div>
+
+      <div className="panel">
+        {loading ? (
+          <p className="loading-text">Cargando productos...</p>
+        ) : (
+          <ProductTable
+            products={products}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        )}
+      </div>
     </section>
   )
 }

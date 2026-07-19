@@ -93,7 +93,7 @@ const createOrder = async (req, res) => {
       const updatedProduct = await Product.findOneAndUpdate(
         { _id: product._id, stock: { $gte: cantidad } },
         { $inc: { stock: -cantidad } },
-        { new: true }
+        { returnDocument: "after" }
       );
 
       if (!updatedProduct) {
@@ -245,7 +245,7 @@ const updateOrderStatus = async (req, res) => {
     const updatedOrder = await Order.findByIdAndUpdate(
       id,
       { estado },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     )
       .populate("cliente")
       .populate("productos.producto");

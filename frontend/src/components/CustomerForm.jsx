@@ -91,10 +91,11 @@ function CustomerForm({ initialData, onSubmit, onCancel, isSubmitting = false })
   const submitLabel = initialData ? 'Guardar cambios' : 'Crear cliente'
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <h2>{title}</h2>
+    <form className="form" onSubmit={handleSubmit} noValidate>
+      <h2 className="form-title">{title}</h2>
 
-      <div>
+      <div className="form-grid">
+      <div className="form-field">
         <label htmlFor="nombre">Nombre</label>
         <input
           id="nombre"
@@ -104,10 +105,10 @@ function CustomerForm({ initialData, onSubmit, onCancel, isSubmitting = false })
           onChange={handleChange}
           aria-invalid={Boolean(errors.nombre)}
         />
-        {errors.nombre ? <p>{errors.nombre}</p> : null}
+        {errors.nombre ? <p className="form-error">{errors.nombre}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field">
         <label htmlFor="apellido">Apellido</label>
         <input
           id="apellido"
@@ -117,10 +118,10 @@ function CustomerForm({ initialData, onSubmit, onCancel, isSubmitting = false })
           onChange={handleChange}
           aria-invalid={Boolean(errors.apellido)}
         />
-        {errors.apellido ? <p>{errors.apellido}</p> : null}
+        {errors.apellido ? <p className="form-error">{errors.apellido}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field form-field-full">
         <label htmlFor="correo">Correo</label>
         <input
           id="correo"
@@ -130,10 +131,10 @@ function CustomerForm({ initialData, onSubmit, onCancel, isSubmitting = false })
           onChange={handleChange}
           aria-invalid={Boolean(errors.correo)}
         />
-        {errors.correo ? <p>{errors.correo}</p> : null}
+        {errors.correo ? <p className="form-error">{errors.correo}</p> : null}
       </div>
 
-      <div>
+      <div className="form-field form-field-full">
         <label htmlFor="telefono">Telefono</label>
         <input
           id="telefono"
@@ -143,14 +144,15 @@ function CustomerForm({ initialData, onSubmit, onCancel, isSubmitting = false })
           onChange={handleChange}
           aria-invalid={Boolean(errors.telefono)}
         />
-        {errors.telefono ? <p>{errors.telefono}</p> : null}
+        {errors.telefono ? <p className="form-error">{errors.telefono}</p> : null}
+      </div>
       </div>
 
-      <div>
-        <button type="submit" disabled={isSubmitting}>
+      <div className="form-actions">
+        <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Guardando...' : submitLabel}
         </button>
-        <button type="button" onClick={onCancel} disabled={isSubmitting}>
+        <button className="btn btn-secondary" type="button" onClick={onCancel} disabled={isSubmitting}>
           Cancelar
         </button>
       </div>

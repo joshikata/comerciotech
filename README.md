@@ -126,9 +126,21 @@ Si no se define, el frontend usa por defecto:
 http://localhost:5000
 ```
 
+## Inicio Rápido Recomendado
+
+Para evitar errores de carga en el frontend, inicia backend y frontend juntos desde la raíz del proyecto:
+
+```bash
+npm run dev
+```
+
+Este comando ejecuta ambos servicios en paralelo:
+- Backend en http://localhost:5000
+- Frontend en http://localhost:5173
+
 ## Cómo Ejecutar Backend
 
-Desde la carpeta `backend` (modo desarrollo):
+Opcionalmente, si quieres iniciar solo el backend, usa la carpeta `backend` (modo desarrollo):
 
 ```bash
 npm run dev
@@ -148,7 +160,7 @@ http://localhost:5000
 
 ## Cómo Ejecutar Frontend
 
-Desde la carpeta `frontend`:
+Opcionalmente, si quieres iniciar solo el frontend, usa la carpeta `frontend`:
 
 ```bash
 npm run dev
@@ -159,6 +171,9 @@ Frontend disponible típicamente en:
 ```text
 http://localhost:5173
 ```
+
+Nota importante:
+- Si el frontend muestra mensajes como No se pudieron cargar los clientes, verifica que el backend esté ejecutándose en http://localhost:5000.
 
 ## Cómo Ejecutar Seed
 

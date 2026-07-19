@@ -104,35 +104,46 @@ function CustomersPage() {
 
   return (
     <section className="page-card">
-      <h1>Clientes</h1>
+      <header className="page-header">
+        <div>
+          <h1 className="page-title">Clientes</h1>
+          <p className="page-subtitle">Gestion y mantenimiento del registro de clientes.</p>
+        </div>
+      </header>
 
-      {errorMessage ? <p>{errorMessage}</p> : null}
-      {successMessage ? <p>{successMessage}</p> : null}
+      {errorMessage ? <p className="alert alert-error">{errorMessage}</p> : null}
+      {successMessage ? <p className="alert alert-success">{successMessage}</p> : null}
 
-      <div style={{ marginBottom: '1rem' }}>
-        <button type="button" onClick={() => setSelectedCustomer(null)}>
+      <div className="toolbar">
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => setSelectedCustomer(null)}
+        >
           Nuevo cliente
         </button>
       </div>
 
-      <CustomerForm
-        initialData={selectedCustomer}
-        onSubmit={handleCreateOrUpdate}
-        onCancel={handleCancel}
-        isSubmitting={submitting}
-      />
-
-      <hr />
-
-      {loading ? (
-        <p>Cargando clientes...</p>
-      ) : (
-        <CustomerTable
-          customers={customers}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
+      <div className="panel">
+        <CustomerForm
+          initialData={selectedCustomer}
+          onSubmit={handleCreateOrUpdate}
+          onCancel={handleCancel}
+          isSubmitting={submitting}
         />
-      )}
+      </div>
+
+      <div className="panel">
+        {loading ? (
+          <p className="loading-text">Cargando clientes...</p>
+        ) : (
+          <CustomerTable
+            customers={customers}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        )}
+      </div>
     </section>
   )
 }

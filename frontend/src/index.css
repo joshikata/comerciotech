@@ -1,10 +1,33 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f6f8;
-  color: #0f172a;
+:root {
+  --bg-primary: #f6fbff;
+  --bg-secondary: #eff8ff;
+  --surface: #ffffff;
+  --surface-strong: #f8fcff;
+  --text-main: #0f2742;
+  --text-muted: #4a6078;
+  --brand-dark: #0f3a67;
+  --brand-dark-strong: #0a2d50;
+  --brand-turquoise: #10b8be;
+  --brand-turquoise-strong: #0d9ca2;
+  --border-soft: #d8e6f2;
+  --shadow-soft: 0 12px 28px rgba(14, 53, 92, 0.08);
+  --shadow-card: 0 10px 24px rgba(16, 68, 113, 0.08);
 }
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text-main);
+  font-family: 'Nunito Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:
+    radial-gradient(circle at 5% 5%, #dcf4ff 0%, rgba(220, 244, 255, 0) 42%),
+    radial-gradient(circle at 95% 0%, #dff8fb 0%, rgba(223, 248, 251, 0) 38%),
+    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+a {
+  color: inherit;
 }

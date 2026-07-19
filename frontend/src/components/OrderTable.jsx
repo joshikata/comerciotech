@@ -22,43 +22,56 @@ function getCustomerName(order) {
   return order.cliente || '-'
 }
 
+function getStatusBadgeClass(status) {
+  const normalized = String(status || '').toLowerCase().trim()
+  return `badge badge-${normalized || 'pendiente'}`
+}
+
 function OrderTable({ orders, onChangeStatus, onDelete }) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Cliente</th>
-          <th>Total</th>
-          <th>Estado</th>
-          <th>Fecha</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {orders?.length ? (
-          orders.map((order) => (
-            <tr key={order._id || order.id}>
-              <td>{getCustomerName(order)}</td>
-              <td>{order.total ?? '-'}</td>
-              <td>{order.estado || '-'}</td>
-              <td>{formatDate(order.fechaPedido || order.createdAt)}</td>
-              <td>
-                <button type="button" onClick={() => onChangeStatus?.(order)}>
-                  Cambiar estado
-                </button>
-                <button type="button" onClick={() => onDelete?.(order)}>
-                  Eliminar
-                </button>
-              </td>
-            </tr>
-          ))
-        ) : (
+    <div className="table-wrap">
+      <table className="table">
+        <thead>
           <tr>
-            <td colSpan="5">No hay pedidos para mostrar.</td>
+            <th>Cliente</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
           </tr>
-        )}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {orders?.length ? (
+            orders.map((order) => (
+              <tr key={order._id || order.id}>
+                <td>{getCustomerName(order)}</td>
+                <td>{order.total ?? '-'}</td>
+                <td>
+                  <span className={getStatusBadgeClass(order.estado)}>
+                    {order.estado || '-'}
+                  </span>
+                </td>
+                <td>{formatDate(order.fechaPedido || order.createdAt)}</td>
+                <td>
+                  <div className="row-actions">
+                    <button className="btn btn-secondary" type="button" onClick={() => onChangeStatus?.(order)}>
+                      Cambiar estado
+                    </button>
+                    <button className="btn btn-danger" type="button" onClick={() => onDelete?.(order)}>
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td className="empty-row" colSpan="5">No hay pedidos para mostrar.</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   )
 }
 
