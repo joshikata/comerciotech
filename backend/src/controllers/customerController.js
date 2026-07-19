@@ -1,6 +1,50 @@
 const mongoose = require("mongoose");
 const Customer = require("../models/Customer");
 
+const buildValidationDetails = (error) => {
+  if (!error.errors) {
+    return null;
+  }
+
+  return Object.values(error.errors).map((item) => ({
+    field: item.path,
+    message: item.message,
+  }));
+};
+
+const handleCustomerError = (res, error, fallbackMessage) => {
+  if (error.code === 11000) {
+    return res.status(409).json({
+      ok: false,
+      message: "El correo ya esta registrado",
+      error: "DUPLICATE_EMAIL",
+    });
+  }
+
+  if (error.name === "ValidationError") {
+    return res.status(400).json({
+      ok: false,
+      message: "Error de validacion en los datos del cliente",
+      error: "VALIDATION_ERROR",
+      details: buildValidationDetails(error),
+    });
+  }
+
+  if (error.name === "CastError" && error.path === "_id") {
+    return res.status(400).json({
+      ok: false,
+      message: "ID de cliente invalido",
+      error: "INVALID_CUSTOMER_ID",
+    });
+  }
+
+  return res.status(500).json({
+    ok: false,
+    message: fallbackMessage,
+    error: error.message,
+  });
+};
+
 const createCustomer = async (req, res) => {
   try {
     const customer = await Customer.create(req.body);
@@ -11,11 +55,7 @@ const createCustomer = async (req, res) => {
       data: customer,
     });
   } catch (error) {
-    return res.status(400).json({
-      ok: false,
-      message: "No se pudo crear el cliente",
-      error: error.message,
-    });
+    return handleCustomerError(res, error, "No se pudo crear el cliente");
   }
 };
 
@@ -46,6 +86,7 @@ const getCustomerById = async (req, res) => {
       return res.status(400).json({
         ok: false,
         message: "ID de cliente invalido",
+        error: "INVALID_CUSTOMER_ID",
       });
     }
 
@@ -55,6 +96,7 @@ const getCustomerById = async (req, res) => {
       return res.status(404).json({
         ok: false,
         message: "Cliente no encontrado",
+        error: "CUSTOMER_NOT_FOUND",
       });
     }
 
@@ -64,11 +106,7 @@ const getCustomerById = async (req, res) => {
       data: customer,
     });
   } catch (error) {
-    return res.status(500).json({
-      ok: false,
-      message: "No se pudo obtener el cliente",
-      error: error.message,
-    });
+    return handleCustomerError(res, error, "No se pudo obtener el cliente");
   }
 };
 
@@ -80,6 +118,7 @@ const updateCustomer = async (req, res) => {
       return res.status(400).json({
         ok: false,
         message: "ID de cliente invalido",
+        error: "INVALID_CUSTOMER_ID",
       });
     }
 
@@ -92,6 +131,7 @@ const updateCustomer = async (req, res) => {
       return res.status(404).json({
         ok: false,
         message: "Cliente no encontrado",
+        error: "CUSTOMER_NOT_FOUND",
       });
     }
 
@@ -101,11 +141,7 @@ const updateCustomer = async (req, res) => {
       data: updatedCustomer,
     });
   } catch (error) {
-    return res.status(400).json({
-      ok: false,
-      message: "No se pudo actualizar el cliente",
-      error: error.message,
-    });
+    return handleCustomerError(res, error, "No se pudo actualizar el cliente");
   }
 };
 
@@ -117,6 +153,7 @@ const deleteCustomer = async (req, res) => {
       return res.status(400).json({
         ok: false,
         message: "ID de cliente invalido",
+        error: "INVALID_CUSTOMER_ID",
       });
     }
 
@@ -126,6 +163,7 @@ const deleteCustomer = async (req, res) => {
       return res.status(404).json({
         ok: false,
         message: "Cliente no encontrado",
+        error: "CUSTOMER_NOT_FOUND",
       });
     }
 
@@ -135,11 +173,7 @@ const deleteCustomer = async (req, res) => {
       data: deletedCustomer,
     });
   } catch (error) {
-    return res.status(500).json({
-      ok: false,
-      message: "No se pudo eliminar el cliente",
-      error: error.message,
-    });
+    return handleCustomerError(res, error, "No se pudo eliminar el cliente");
   }
 };
 
