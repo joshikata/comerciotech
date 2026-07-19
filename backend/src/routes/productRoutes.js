@@ -9,10 +9,10 @@ const {
 
 const router = express.Router();
 
-router.post("/api/products", createProduct);
-router.get("/api/products", getProducts);
-router.get("/api/products/:id", getProductById);
-router.put("/api/products/:id", updateProduct);
-router.delete("/api/products/:id", deleteProduct);
+router.post("/", createProduct);
+router.get("/", getProducts);
+router.get("/:id", getProductById);
+router.put("/:id", updateProduct);
+router.delete("/:id", deleteProduct);
 
 module.exports = router;
