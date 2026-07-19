@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react'
 import CustomerForm from '../components/CustomerForm'
 import CustomerTable from '../components/CustomerTable'
 import CustomerService from '../services/customerService'
-
-const getErrorMessage = (error, fallback) => {
-  return error?.response?.data?.message || fallback
-}
+import { getApiErrorMessage } from '../utils/errors'
 
 function CustomersPage() {
   const [customers, setCustomers] = useState([])
@@ -21,7 +18,7 @@ function CustomersPage() {
       const response = await CustomerService.getAll()
       setCustomers(response.data?.data || [])
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudieron cargar los clientes.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudieron cargar los clientes.'))
     } finally {
       setLoading(false)
     }
@@ -55,7 +52,7 @@ function CustomersPage() {
 
       setSelectedCustomer(null)
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo guardar el cliente.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo guardar el cliente.'))
     } finally {
       setSubmitting(false)
     }
@@ -73,7 +70,7 @@ function CustomersPage() {
       const response = await CustomerService.getById(customerId)
       setSelectedCustomer(response.data?.data || customer)
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo obtener el cliente.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo obtener el cliente.'))
     }
   }
 
@@ -96,7 +93,7 @@ function CustomersPage() {
       setSelectedCustomer((prev) => (prev?._id === customerId ? null : prev))
       setSuccessMessage('Cliente eliminado correctamente.')
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo eliminar el cliente.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo eliminar el cliente.'))
     }
   }
 

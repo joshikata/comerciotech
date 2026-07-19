@@ -4,12 +4,9 @@ import OrderTable from '../components/OrderTable'
 import CustomerService from '../services/customerService'
 import OrderService from '../services/orderService'
 import ProductService from '../services/productService'
+import { getApiErrorMessage } from '../utils/errors'
 
 const ORDER_STATES = ['pendiente', 'procesando', 'enviado', 'entregado', 'cancelado']
-
-const getErrorMessage = (error, fallback) => {
-  return error?.response?.data?.message || fallback
-}
 
 function OrdersPage() {
   const [orders, setOrders] = useState([])
@@ -40,7 +37,7 @@ function OrdersPage() {
       setCustomers(customersResponse.data?.data || [])
       setProducts(productsResponse.data?.data || [])
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudieron cargar los datos de pedidos.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudieron cargar los datos de pedidos.'))
     } finally {
       setLoading(false)
     }
@@ -60,7 +57,7 @@ function OrdersPage() {
       await loadOrders()
       setSuccessMessage('Pedido creado correctamente.')
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo crear el pedido.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo crear el pedido.'))
     } finally {
       setSubmitting(false)
     }
@@ -94,7 +91,7 @@ function OrdersPage() {
       setOrders((prev) => prev.map((item) => (item._id === orderId ? updated : item)))
       setSuccessMessage('Estado actualizado correctamente.')
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo cambiar el estado del pedido.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo cambiar el estado del pedido.'))
     }
   }
 
@@ -116,7 +113,7 @@ function OrdersPage() {
       setOrders((prev) => prev.filter((item) => item._id !== orderId))
       setSuccessMessage('Pedido eliminado correctamente.')
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo eliminar el pedido.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo eliminar el pedido.'))
     }
   }
 

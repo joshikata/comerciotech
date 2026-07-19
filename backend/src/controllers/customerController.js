@@ -1,16 +1,6 @@
 const mongoose = require("mongoose");
 const Customer = require("../models/Customer");
-
-const buildValidationDetails = (error) => {
-  if (!error.errors) {
-    return null;
-  }
-
-  return Object.values(error.errors).map((item) => ({
-    field: item.path,
-    message: item.message,
-  }));
-};
+const { buildValidationDetails } = require("../utils/validation");
 
 const handleCustomerError = (res, error, fallbackMessage) => {
   if (error.code === 11000) {

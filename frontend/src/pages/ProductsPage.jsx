@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react'
 import ProductForm from '../components/ProductForm'
 import ProductTable from '../components/ProductTable'
 import ProductService from '../services/productService'
-
-const getErrorMessage = (error, fallback) => {
-  return error?.response?.data?.message || fallback
-}
+import { getApiErrorMessage } from '../utils/errors'
 
 function ProductsPage() {
   const [products, setProducts] = useState([])
@@ -21,7 +18,7 @@ function ProductsPage() {
       const response = await ProductService.getAll()
       setProducts(response.data?.data || [])
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudieron cargar los productos.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudieron cargar los productos.'))
     } finally {
       setLoading(false)
     }
@@ -55,7 +52,7 @@ function ProductsPage() {
 
       setSelectedProduct(null)
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo guardar el producto.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo guardar el producto.'))
     } finally {
       setSubmitting(false)
     }
@@ -73,7 +70,7 @@ function ProductsPage() {
       const response = await ProductService.getById(productId)
       setSelectedProduct(response.data?.data || product)
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo obtener el producto.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo obtener el producto.'))
     }
   }
 
@@ -96,7 +93,7 @@ function ProductsPage() {
       setSelectedProduct((prev) => (prev?._id === productId ? null : prev))
       setSuccessMessage('Producto eliminado correctamente.')
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'No se pudo eliminar el producto.'))
+      setErrorMessage(getApiErrorMessage(error, 'No se pudo eliminar el producto.'))
     }
   }
 
